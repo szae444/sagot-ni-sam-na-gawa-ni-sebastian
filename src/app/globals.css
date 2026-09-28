@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ───────── Palette: aesthetic red on warm paper ───────── */
+:root {
+  --paper: #fbf7f2;
+  --paper-raised: #fffdfa;
+  --paper-sunken: #f4ece4;
+  --ink: #221614;
+  --ink-muted: #6e5a55;
+  --ink-faint: #a08e88;
+  --line: #eaddd4;
+  --line-strong: #d9c5b9;
+
+  --red: #a4161a;        /* crimson — the one accent */
+  --red-deep: #660708;   /* oxblood — pressed / headings */
+  --red-ink: #7c1013;
+  --rose: #f7e1de;       /* accent wash */
+  --blush: #fbefec;
+
+  --gold: #a8741f;       /* brass — tips */
+  --gold-soft: #f6ebd7;
+  --sage: #3f7552;       /* correct */
+  --sage-soft: #e3efe6;
+
+  --shadow: 12 30% 20%;
+  color-scheme: light;
+}
+
+.dark {
+  --paper: #140e0d;
+  --paper-raised: #1c1413;
+  --paper-sunken: #0f0a09;
+  --ink: #f3e9e4;
+  --ink-muted: #bca8a2;
+  --ink-faint: #806c67;
+  --line: #2f201e;
+  --line-strong: #47302c;
+
+  --red: #f0646b;
+  --red-deep: #ff9a9d;
+  --red-ink: #ffc2c2;
+  --rose: #3a1a1b;
+  --blush: #261514;
+
+  --gold: #e3b366;
+  --gold-soft: #2f2410;
+  --sage: #86c29a;
+  --sage-soft: #16281c;
+
+  --shadow: 0 0% 0%;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunken: var(--paper-sunken);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-red: var(--red);
+  --color-red-deep: var(--red-deep);
+  --color-red-ink: var(--red-ink);
+  --color-rose: var(--rose);
+  --color-blush: var(--blush);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+
+  --font-display: var(--font-instrument), "Times New Roman", serif;
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html { background: var(--paper); }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection { background: var(--rose); color: var(--red-deep); }
+
+h1, h2, h3 { text-wrap: balance; }
+
+/* Subtle paper grain — a deliberate texture, not a gradient blob */
+.grain {
+  background-image: radial-gradient(color-mix(in oklab, var(--ink) 5%, transparent) 0.6px, transparent 0.6px);
+  background-size: 5px 5px;
+}
+
+.display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; line-height: 0.95; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* KaTeX tuning */
+.katex { font-size: 1.07em; }
+.katex-display { margin: 0.6rem 0; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.math-scroll { overflow-x: auto; }
+
+/* Focus ring */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Range inputs */
+input[type="range"] { accent-color: var(--red); }
+
+/* Scrollbar */
+* { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+
+/* Reveal animation */
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 0.45s var(--ease-out-expo) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+@media print {
+  aside, header.topbar, .no-print { display: none !important; }
+  main { padding: 0 !important; margin: 0 !important; }
+  .print-open { display: block !important; }
+}
